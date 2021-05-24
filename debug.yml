@@ -1,0 +1,11 @@
+---
+ - hosts: all
+   gather_facts: no
+   vars:
+      http_port: 8087
+      username: raghu
+
+   tasks:
+      - debug: msg="Inventory hostnames are {{inventory_hostname}}"
+      - debug: msg="Port variable is {{http_port}} & username is {{username}}"
+
