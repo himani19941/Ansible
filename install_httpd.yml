@@ -1,0 +1,30 @@
+---
+  - hosts: Servers
+    become: true
+    vars: 
+      project_root: /var/www/html
+    tasks:
+      - name: install httpd
+        yum: 
+          name=httpd 
+          state=latest
+ 
+      - name: start the service
+        service: 
+          name=httpd 
+          state=started
+
+      - name: copy the website config file
+        copy: 
+          src=index.html 
+          dest={{ project_root }}/index.html
+          owner=apache 
+          group=apache
+          mode=0644
+        notify: httpd restart
+
+    handlers:
+      - name: httpd restart
+        service: 
+          name=httpd 
+          state=restarted
